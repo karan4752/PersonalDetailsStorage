@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Domain;
 using MediatR;
 using Persistence;
@@ -17,17 +18,17 @@ namespace Application.BankDetail
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IMapper _mapper;
+            public Handler(DataContext context, IMapper mapper)
             {
+                _mapper = mapper;
                 _context = context;
             }
 
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
                 var bankDetail = await _context.BankDetail.FindAsync(request.BankDetails.Id);
-                bankDetail.BankAccountNumber = request.BankDetails.BankAccountNumber ?? bankDetail.BankAccountNumber;
-                bankDetail.BankIfscCode = request.BankDetails.BankIfscCode ?? bankDetail.BankIfscCode;
-                bankDetail.BankName = request.BankDetails.BankName ?? bankDetail.BankName;
+                _mapper.Map(request.BankDetails, bankDetail);
                 await _context.SaveChangesAsync();
             }
         }
