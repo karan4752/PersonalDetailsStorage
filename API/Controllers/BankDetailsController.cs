@@ -8,9 +8,9 @@ namespace API.Controllers
     public class BankDetailsController : BaseController
     {
         [HttpGet]//api/bankdetails
-        public async Task<ActionResult<List<BankDetails>>> GetBankDetails()
+        public async Task<ActionResult<List<BankDetails>>> GetBankDetails(CancellationToken cancellationToken)
         {
-            return await Mediator.Send(new List.Query());
+            return await Mediator.Send(new List.Query(),cancellationToken);
         }
         [HttpGet("{id}")]//api/bankdetails/1234-1234-1234
         public async Task<ActionResult<BankDetails>> GetBankDetail(Guid id)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
 
@@ -14,6 +15,13 @@ namespace Application.BankDetail
         public class Command : IRequest
         {
             public BankDetails BankDetails { get; set; }
+        }
+         public class CommondValidator : AbstractValidator<Command>
+        {
+            public CommondValidator()
+            {
+                RuleFor(x => x.BankDetails).SetValidator(new BankDetailValidator());
+            }
         }
         public class Handler : IRequestHandler<Command>
         {
