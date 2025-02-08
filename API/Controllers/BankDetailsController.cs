@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application;
 using Application.BankDetail;
 using Domain;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
 
 namespace API.Controllers
 {
@@ -31,11 +24,17 @@ namespace API.Controllers
             await Mediator.Send(new Create.Command { BankDetails = bankDetails });
             return Ok();
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Edit(Guid id, BankDetails bankDetails)
         {
             bankDetails.Id = id;
             await Mediator.Send(new Edit.Command { BankDetails = bankDetails });
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await Mediator.Send(new Delete.Command { Id = id });
             return Ok();
         }
     }
