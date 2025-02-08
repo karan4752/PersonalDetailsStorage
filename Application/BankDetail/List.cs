@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,9 @@ namespace Application;
 
 public class List
 {
-    public class Query : IRequest<List<BankDetails>> { }
+    public class Query : IRequest<Result<List<BankDetails>>> { }
 
-    public class Handler : IRequestHandler<Query, List<BankDetails>>
+    public class Handler : IRequestHandler<Query, Result<List<BankDetails>>>
     {
         private readonly DataContext _context;
         public ILogger<List> _Logger;
@@ -20,7 +21,7 @@ public class List
             _Logger = logger;
             _context = context;
         }
-        public async Task<List<BankDetails>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<List<BankDetails>>> Handle(Query request, CancellationToken cancellationToken)
         {
             // try
             // {
@@ -35,7 +36,7 @@ public class List
             // {
             //     _Logger.LogError("Task was cancelled");
             // }
-            return await _context.BankDetail.ToListAsync();
+            return Result<List<BankDetails>>.Success(await _context.BankDetail.ToListAsync());
         }
     }
 }
