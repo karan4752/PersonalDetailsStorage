@@ -1,3 +1,4 @@
+using API.Services;
 using Domain;
 using Persistence;
 
@@ -12,6 +13,7 @@ namespace API.Extensions
                 opt.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<DataContext>();
             services.AddAuthentication();
+            services.AddScoped<TokenService>();
             return services;
         }
     }
