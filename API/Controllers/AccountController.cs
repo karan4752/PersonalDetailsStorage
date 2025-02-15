@@ -1,18 +1,20 @@
 using API.Dtos;
 using API.Services;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly TokenService _tokenService;
-        public AccountController(UserManager<AppUser> userManager,TokenService tokenService)
+        public AccountController(UserManager<AppUser> userManager, TokenService tokenService)
         {
             _tokenService = tokenService;
             _userManager = userManager;
