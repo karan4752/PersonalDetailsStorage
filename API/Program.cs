@@ -24,6 +24,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("CrosPolicy");
 
 app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllers();
 
