@@ -7,11 +7,13 @@ namespace API.Controllers
 {
     public class BankDetailsController : BaseController
     {
+
         [HttpGet]//api/bankdetails
         public async Task<IActionResult> GetBankDetails(CancellationToken cancellationToken)
         {
             return HandleResult(await Mediator.Send(new List.Query(), cancellationToken));
         }
+
         [HttpGet("{id}")]//api/bankdetails/1234-1234-1234
         public async Task<IActionResult> GetBankDetail(Guid id)
         {
@@ -24,12 +26,14 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Create.Command { BankDetails = bankDetails }));
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(Guid id, BankDetails bankDetails)
         {
             bankDetails.Id = id;
             return HandleResult(await Mediator.Send(new Edit.Command { BankDetails = bankDetails }));
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

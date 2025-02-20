@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Profiles;
 
-namespace Domain
+namespace Application.BankDetail
 {
-    public class BankDetails
+    public class BankDetailsDto
     {
         public Guid Id { get; set; }
         public string BankName { get; set; }
@@ -15,6 +16,8 @@ namespace Domain
         public Guid NebankingId { get; set; }
         public bool IsCardDetialsAvailable { get; set; }
         public Guid CardDetailsId { get; set; }
-        public ICollection<UserBankDetails> UserBankDetails { get; set; } = new List<UserBankDetails>();
+        public string UserName { get; set; }
+        public ICollection<Profile> UserBankDetails { get; set; }
+
     }
 }
