@@ -15,5 +15,6 @@ namespace Domain
         public Guid NebankingId { get; set; }
         public bool IsCardDetialsAvailable { get; set; }
         public Guid CardDetailsId { get; set; }
+        public ICollection<UserBankDetails> UserBankDetails { get; set; }
     }
 }

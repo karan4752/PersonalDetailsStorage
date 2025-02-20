@@ -17,5 +17,22 @@ namespace Persistence
         }
 
         public DbSet<BankDetails> BankDetail { get; set; }
+        public DbSet<UserBankDetails> UserBankDetail { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<UserBankDetails>(x => x.HasKey(ub => new { ub.AppUserId, ub.BankDetailsId }));
+
+            builder.Entity<UserBankDetails>()
+                .HasOne(u => u.AppUser)
+                .WithMany(b => b.BankDetails)
+                .HasForeignKey(ub => ub.AppUserId);
+
+            builder.Entity<UserBankDetails>()
+            .HasOne(u => u.BankDetails)
+            .WithMany(b => b.UserBankDetails)
+            .HasForeignKey(ub => ub.BankDetailsId);
+        }
     }
 }
