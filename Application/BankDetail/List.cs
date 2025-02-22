@@ -2,6 +2,7 @@
 using Application.BankDetail;
 using Application.Core;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace Application;
 
 public class List
 {
-    public class Query : IRequest<Result<List<BankDetailsDto>>> { }
+    public class Query : IRequest<Result<List<BankDetailsDto>>> { public string UserId { get; set; }}
 
     public class Handler : IRequestHandler<Query, Result<List<BankDetailsDto>>>
     {
@@ -27,6 +28,7 @@ public class List
         }
         public async Task<Result<List<BankDetailsDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
+            #region Commented previous code
             // try
             // {
             //     for (int i = 0; i < 10; i++)
@@ -40,12 +42,21 @@ public class List
             // {
             //     _Logger.LogError("Task was cancelled");
             // }
+            // var bankDetails = await _context.BankDetail
+            //                         .Include(b => b.UserBankDetails)
+            //                         .ThenInclude(u => u.AppUser)
+            //                         .ToListAsync(cancellationToken);
+            // var bankDetailsToReturn = _mapper.Map<List<BankDetailsDto>>(bankDetails);
+            #endregion
+           
+            // var bankDetails = await _context.BankDetail
+            //                 .ProjectTo<BankDetailsDto>(_mapper.ConfigurationProvider)
+            //                 .ToListAsync(cancellationToken);
             var bankDetails = await _context.BankDetail
-                                    .Include(b => b.UserBankDetails)
-                                    .ThenInclude(u => u.AppUser)
-                                    .ToListAsync(cancellationToken);
-            var bankDetailsToReturn = _mapper.Map<List<BankDetailsDto>>(bankDetails);
-            return Result<List<BankDetailsDto>>.Success(bankDetailsToReturn);
+                    .Where(x => x.UserId == request.UserId)
+                    .ProjectTo<BankDetailsDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+            return Result<List<BankDetailsDto>>.Success(bankDetails);
         }
     }
 }

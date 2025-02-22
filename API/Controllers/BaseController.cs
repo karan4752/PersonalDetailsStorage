@@ -1,6 +1,7 @@
 using Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -19,6 +20,10 @@ namespace API.Controllers
             if (result.IsSuccess && result.Value == null)
                 return NotFound();
             return BadRequest(result.Error);
+        }
+        protected string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }

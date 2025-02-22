@@ -9,6 +9,7 @@ namespace Application.BankDetail
     public class BankDetailsDto
     {
         public Guid Id { get; set; }
+        public string UserId { get; set; }
         public string BankName { get; set; }
         public string BankIfscCode { get; set; }
         public string BankAccountNumber { get; set; }
