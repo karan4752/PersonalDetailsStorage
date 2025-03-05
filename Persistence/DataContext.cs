@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace Persistence
 {
+    //dotnet ef migrations add InitialCreate -p Persistence -s API
     public class DataContext : IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions options) : base(options)
@@ -18,7 +19,7 @@ namespace Persistence
 
         public DbSet<BankDetails> BankDetail { get; set; }
         public DbSet<UserBankDetails> UserBankDetail { get; set; }
-
+        public DbSet<Photo> Photos { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
