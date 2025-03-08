@@ -38,6 +38,10 @@ namespace Application.BankDetail
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                if (request.BankDetails == null)
+                {
+                    return Result<Unit>.Fail("BankDetail cannot be null");
+                }
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
                 var userBankDetails = new UserBankDetails

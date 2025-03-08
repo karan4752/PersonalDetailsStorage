@@ -13,10 +13,13 @@ namespace Application.BankDetail
         public string BankName { get; set; }
         public string BankIfscCode { get; set; }
         public string BankAccountNumber { get; set; }
-        public bool IsNetBankingAvailable { get; set; }
-        public Guid NebankingId { get; set; }
-        public bool IsCardDetialsAvailable { get; set; }
-        public Guid CardDetailsId { get; set; }
+        public string BankAccountType { get; set; }
+        public string BankAccountHolderName { get; set; }
+        public string UserPhoneNumber { get; set; }
+        public string UserEmail { get; set; }
+        public string UserAddress { get; set; }
+        public string BankBranch { get; set; }
+        public long BankBalance { get; set; }
         public string UserName { get; set; }
         public ICollection<Profile> UserBankDetails { get; set; }
 
